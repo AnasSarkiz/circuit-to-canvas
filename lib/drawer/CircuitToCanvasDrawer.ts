@@ -20,6 +20,7 @@ import type {
   PcbFabricationNotePath,
   PcbNotePath,
   PcbNoteText,
+  PcbNoteDimension,
   PcbNoteLine,
 } from "circuit-json"
 import { identity, compose, translate, scale } from "transformation-matrix"
@@ -53,6 +54,7 @@ import { drawPcbNoteRect } from "./elements/pcb-note-rect"
 import { drawPcbFabricationNotePath } from "./elements/pcb-fabrication-note-path"
 import { drawPcbNotePath } from "./elements/pcb-note-path"
 import { drawPcbNoteText } from "./elements/pcb-note-text"
+import { drawPcbNoteDimension } from "./elements/pcb-note-dimension"
 import { drawPcbNoteLine } from "./elements/pcb-note-line"
 
 export interface DrawElementsOptions {
@@ -337,6 +339,15 @@ export class CircuitToCanvasDrawer {
       drawPcbNoteLine({
         ctx: this.ctx,
         line: element as PcbNoteLine,
+        realToCanvasMat: this.realToCanvasMat,
+        colorMap: this.colorMap,
+      })
+    }
+
+    if (element.type === "pcb_note_dimension") {
+      drawPcbNoteDimension({
+        ctx: this.ctx,
+        pcbNoteDimension: element as PcbNoteDimension,
         realToCanvasMat: this.realToCanvasMat,
         colorMap: this.colorMap,
       })
